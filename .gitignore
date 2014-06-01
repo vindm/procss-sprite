@@ -1,0 +1,5 @@
+node_modules/
+sprites/
+.spriter.json
+.idea/
+.DS_Store

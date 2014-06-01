@@ -1,0 +1,15 @@
+#without-config .beaver
+{
+    background: url(../_common/img/beaver.png) /* procss.sprite() */;
+}
+
+#without-config .bird
+{
+    background: transparent;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprite() */;
+}
+
+#without-config .bee
+{
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite() */;
+}

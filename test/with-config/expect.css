@@ -1,0 +1,24 @@
+#with-config .beaver
+{
+    background: url(../_common/img/beaver.png) /* procss.sprite(sum:52f70c05360427874a7d5df7fcf04a5755a854e5) */;
+    background-image: url(sprites/test/test_sprite.png) /*~~*/;
+    background-position: -2px -2px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}
+
+#with-config .bird
+{
+    background: transparent;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprite(sum:9df4100b728c5cfaa93481dda26f59fb7751a662) */;
+    background-image: url(sprites/test/test_sprite.png) /*~~*/;
+    background-position: -2px -260px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}
+
+#with-config .bee
+{
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite(sum:0343ef9b426559ad3f378ef1bfbada373acfea2e) */;
+    background-image: url(sprites/test/test_sprite.png) /*~~*/;
+    background-position: -2px -390px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}

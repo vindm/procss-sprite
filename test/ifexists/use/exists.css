@@ -1,0 +1,10 @@
+#ifexists-use .beaver
+{
+    background: url(../../_common/img/beaver.png) /* procss.sprite(sprite) */;
+}
+
+#ifexists-use .bird
+{
+    background: transparent;
+    background-image: url(../../_common/img/winged/bird.png) /* procss.sprite(sprite) */;
+}

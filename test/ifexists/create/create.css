@@ -1,0 +1,14 @@
+#ifexists-create .beaver
+{
+    background: url(../../_common/img/beaver.png) /* procss.sprite(sprite) */;
+}
+
+#ifexists-create .bird
+{
+    background: url(../../_common/img/winged/bird.png) /* procss.sprite(sprite) */;
+}
+
+#ifexists-create .bee
+{
+    background: url(../../_common/img/winged/bee.png) /* procss.sprite(sprite) */;
+}

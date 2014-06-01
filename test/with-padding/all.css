@@ -1,0 +1,15 @@
+#with-padding .beaver
+{
+    background: url(../_common/img/beaver.png) /* procss.sprite(, 20) */;
+}
+
+#with-padding .bird
+{
+    background: transparent;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprite(, 84px 20px) */;
+}
+
+#with-padding .bee
+{
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite(, 116 20) */;
+}

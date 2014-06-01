@@ -1,0 +1,10 @@
+#ifexists-create .bird
+{
+    background: transparent;
+    background-image: url(../../_common/img/winged/bird.png) /* procss.sprite(sprite) */;
+}
+
+#ifexists-create .bee
+{
+    background: transparent url(../../_common/img/winged/bee.png) no-repeat /* procss.sprite(sprite) */;
+}

@@ -1,0 +1,37 @@
+{
+    "name" : "procss-sprite",
+    "version" : "0.1.0",
+    "license" : "MIT",
+    "repository" : {
+        "type" : "git",
+        "url" : "https://github.com/vindm/procss-sprite"
+    },
+    "homepage" : "https://github.com/vindm/procss-sprite",
+    "main" : "lib/sprite.js",
+    "scripts" : {
+        "test" : "jshint --config ./.jshintrc index.js ./test && jscs index.js ./test && mocha -u exports -R spec ./test"
+    },
+    "author" : {
+        "name" : "Dmitriy Vinokurov",
+        "email" : "vinokuroff.dm@gmail.com",
+        "url" : "http://github.com/vindm"
+    },
+    "dependencies" : {
+        "spriter" : "git://github.com/vindm/spriter.git#0.2.0",
+        "globule" : "^0.2.0",
+        "extend" : "^2.0.0",
+        "colors" : "^1.0.2",
+        "vow" : "^0.4.5"
+    },
+    "devDependencies" : {
+        "procss" : "git://github.com/vindm/procss.git#0.1.0",
+        "mocha" : "1.21.x",
+        "chai" : "1.9.x",
+        "jshint" : "2.5.x",
+        "jscs" : ">=1.6.x"
+    },
+    "readmeFilename" : "README.md",
+    "engines" : [
+        "node >= 0.6.0"
+    ]
+}

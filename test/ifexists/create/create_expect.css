@@ -1,0 +1,23 @@
+#ifexists-create .beaver
+{
+    background: url(../../_common/img/beaver.png) /* procss.sprite(sum:b54b74176b7778d32b8c7b2362b06f29c648b4a1, sprite) */;
+    background-image: url(sprites/sprite.png) /*~~*/;
+    background-position: -2px -2px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}
+
+#ifexists-create .bird
+{
+    background: url(../../_common/img/winged/bird.png) /* procss.sprite(sum:0dc93b6b5b29bf311f8f3e61f2352e7bebbadecb, sprite) */;
+    background-image: url(sprites/sprite.png) /*~~*/;
+    background-position: -260px -2px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}
+
+#ifexists-create .bee
+{
+    background: url(../../_common/img/winged/bee.png) /* procss.sprite(sum:3f81e354414b2a077203c044637cd4cc0614b1e2, sprite) */;
+    background-image: url(sprites/sprite.png) /*~~*/;
+    background-position: -260px -132px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}

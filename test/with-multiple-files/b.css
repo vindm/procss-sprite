@@ -1,0 +1,5 @@
+#witt-multiple-files .bird
+{
+    background: transparent;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprite() */;
+}

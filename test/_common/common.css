@@ -1,0 +1,47 @@
+body {
+    background: #000013;
+}
+
+section
+{
+    margin: 0 20px 20px 10px;
+    display: inline-block;
+    vertical-align: top;
+}
+
+h1
+{
+    color: #C4B420
+}
+
+section h2 {
+    color: #3092C4;
+    padding: 0;
+    line-height: 100%;
+    margin: 0
+}
+
+.beaver, .bird, .bee {
+    background-color: #000000;
+    display: inline-block;
+    vertical-align: middle;
+    border: 2px solid rgb(173, 76, 166);
+    padding: 1px;
+    margin: 10px;
+}
+
+.beaver {
+    width: 256px;
+    height: 256px;
+}
+
+.bird {
+    width: 128px;
+    height: 128px;
+    background: transparent;
+}
+
+.bee {
+    width: 64px;
+    height: 64px;
+}

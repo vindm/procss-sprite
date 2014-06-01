@@ -1,0 +1,9 @@
+#ifexists-use .beaver
+{
+    background: url(../../_common/img/beaver.png) /* procss.sprite(sprite) */;
+}
+
+#ifexists-use .bee
+{
+    background: url(../../_common/img/winged/bee.png) /* procss.sprite(sprite) */;
+}

@@ -1,0 +1,16 @@
+#with-multiple-backgrounds .beaver
+{
+    background: url(../_common/img/winged/bee.png), url(../_common/img/beaver.png) /* procss.sprite() */;
+}
+
+#with-multiple-backgrounds .bird
+{
+    background-image: url(../_common/img/winged/bee.png), url(../_common/img/winged/bird.png) /* procss.sprite() */;
+    background-color: transparent;
+}
+
+#with-multiple-backgrounds .bee
+{
+    background-image: url(../_common/img/winged/bee.png) /* procss.sprite() */;
+    background-color: transparent;
+}

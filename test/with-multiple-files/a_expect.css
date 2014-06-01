@@ -1,0 +1,7 @@
+#witt-multiple-files .beaver
+{
+    background: url(../_common/img/beaver.png) /* procss.sprite(sum:7b416fc20996bc6f999a8264f59b31c67a703fca) */;
+    background-image: url(sprites/multifile_sprite.png) /*~~*/;
+    background-position: -2px -2px /*~~*/;
+    background-repeat: no-repeat /*~~*/;
+}
