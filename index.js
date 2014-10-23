@@ -32,7 +32,7 @@ ProcssSprite.api = (function() {
             instance.config = Array.isArray(pluginConfig) ?
                 pluginConfig :
                 [ {
-                    patterns : '**',
+                    image_paths : '**/*',
                     config : pluginConfig
                 } ];
         },
@@ -324,7 +324,7 @@ ProcssSprite.prototype._getSpriteConfig = function(file, image) {
         imagePath = image.url,
         spriteName = image.spriteName,
         config = [].concat(this.config).reduce(function(config, cnfg) {
-            if (GLOBULE.isMatch(cnfg.patterns, imagePath)) {
+            if (GLOBULE.isMatch(cnfg.image_paths, imagePath)) {
                 EXTEND(true, config, cnfg.config);
             }
 

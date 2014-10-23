@@ -1,54 +1,91 @@
 # Procss-sprite
 
-[Procss](https://github.com/vindm/procss)-plugin for image spriting.
+[Procss](https://github.com/vindm/procss)-plugin for CSS sprites creating.
 
-## Features
+`Procss-sprite` uses `/* pross.sprite([options...]) */` comments
+ to get only necessary images to be sprited, like this:
+```css
+.bg { background: url(image.png) /* procss.sprite() */; }
+```
 
-> * Process only specific urls, matched by `/* procss.sprite() */` comment
+You can group images to specific sprites,
+ by passing a sprite name as 1st argument to CSS sprite command, like this:
+```css
+.bg { background: url(image.png) /* procss.sprite(mysprite) */; }
+```
 
-> * Can sprite multiple backgrounds urls
+You can define margins or a size of clear area around the image in sprite,
+ by passing a valid css margin px value as 2nd argument to CSS sprite command, like this:
+```css
+.bg { background: url(image.png) /* procss.sprite(mysprite, 10) */; }
+.bg { background: url(image.png) /* procss.sprite(, 10 10 10 10) */; }
+```
 
-> * Can restore and use exists sprites
+`Procss-sprite` creates sprites with [Spriter](https://github.com/vindm/spriter),
+ so it can restore and use existing sprites to keep CSS styles actual and 
+ [other stuff](https://github.com/vindm/spriter#Spriter) that `Spriter` can.
+ 
+You can specify [Spriter config](https://github.com/vindm/spriter#how-to-use)
+ depending on spriting image path and/or sprite name from CSS command arguments in `.procss.js` file.
 
-> * @todo
+Checkout [Configuration](https://github.com/vindm/procss-sprite#Configuration) for more info.
 
 ## Usage
    
 Install with [npm](https://npmjs.org/package/procss):
-```
-    $ [sudo] npm install procss-sprite --save
+```sh
+$ [sudo] npm install procss procss-sprite --save
 ```
 
-Input file `a.css`:
-```
-.some-ico {
-    background : url(some_small_image.png) /* procss.sprite() */;
+Input files
+ 
+`./a.css`:
+```css
+.bg1 {
+    background: url(image1.png) /* procss.sprite(mysprite) */;
 }
-.some-ico.svg {
-    background : url(some_small_image.svg) /* procss.sprite() */;
+```
+`./b.css`:
+```css
+.bg2 {
+    background-image: url(image2.png) /* procss.sprite(mysprite, 10 20) */;
 }
 ```
 
-Run `procss` with `procss-sprite` plugin:
-```
-    $ procss a.css -p path/to/procss-sprite
+Define the plugin in `./.procss.js` config file:
+```js
+module.exports = { plugins : [ 'procss-sprite' ] };
 ```
 
-It will generate `./sprites/common.png` sprite and `a.pro.css` file:
+Run `Procss`:
+```sh
+$ procss '**/*.css'
 ```
-.some-ico {
-    background : url(some_image.png)/* procss.sprite(sum:34fc09432b7547b20fd9e7631b9d06ace53d997b) */;
-    background-image: url(sprites/common.png) /*~~*/;
+
+`Procss-sprite` will generate `./sprites/mysprite.png` sprite and files
+
+`./a.pro.css`:
+```css
+.bg1 {
+    background: url(image1.png) /* procss.sprited(mysprite) */;
+    background-image: url(sprites/mysprite.png) /*~~*/;
     background-position: -2px -2px /*~~*/;
     background-repeat: no-repeat /*~~*/;
 }
-.some-ico.svg {
-    background : url(some_another_image.png); /* procss.sprite(sum:69bc2fdf75001c86a12b930f155d2ebbb4da498d) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -260px -2px /*~~*/;
+```
+`./b.pro.css`:
+```css
+.bg2 {
+    background-image: url(image2.png) /* procss.sprited(mysprite, 10 20) */;
+    background-image: url(sprites/mysprite.png) /*~~*/;
+    background-position: -52px -10px /*~~*/;
     background-repeat: no-repeat /*~~*/;
 }
 ```
+
+As you can see, there are some comments that `Procss-sprite` has been added.
+ It's need to allow you to use '?' mask as output option to override original input files
+  and keep valid every already processed CSS rule on each `Procss` run.
 
 Checkout more examples at
  [/example](https://github.com/vindm/procss/blob/master/example) and
@@ -56,36 +93,136 @@ Checkout more examples at
 
 ## Configuration
 
-`Procss-sprite` plugin config is an array of objects with image paths pattern
- and [Spriter](https://github.com/vindm/spriter#how-to-use) config.
+`Procss-sprite` creates spriting config for each parsed image, while collecting them from processing CSS files.
 
-You can use `.procss.js` file to predefine plugin configs by processing input filepaths like this:
-```
+Default sprite config for all images is:
+```js
 {
-    plugins : [
-        {
-            plugin : 'procss-sprite',
-            config : [
-                {
-                    patterns : '**/*.png',
-                    config : {
-                        'default' : {
-                            path : './sprited',
-                            name : 'common',
-                            ext : 'png',
-                            layout : 'smart',
-                            padding : 2,
-                            ifexists : 'create',
-                            cache_path : './.spriter.json'
-                        }
-                    }
-                }
-            ]
-        }
-    ]
+    path : './sprites',
+    name : 'common',
+    ext : 'png',
+    layout : 'smart',
+    padding : 2,
+    ifexists : 'create'
 }
 ```
 
-Checkout 
-* [Procss configuration](https://github.com/vindm/procss#configuration) for more info about `.procss.js` config file
-* [Spriter usage](https://github.com/vindm/spriter#usage) to know more about `Spriter` config
+`Procss-sprite` will group images by unique configs and
+ use these configs as `Spriter` configs with grouped images as `src` to create sprites.
+ Checkout [Spriter configuration](https://github.com/vindm/spriter#configuration) for more info about `Spriter` config.
+
+You can override default config for specific image by using CSS command `name` and `padding` arguments:
+```css
+.bg { background: url(image.png) /* procss.sprite(mysprite, 10 20) */; }
+```
+
+Also, you can use `.procss.js` file to specify `Procss-sprite` plugin config, to have full sprite configuration control:
+```js
+module.exports = {
+    plugins : [ {
+        plugin : 'procss-sprite',
+        config : {...}
+    } ]
+};
+```
+Checkout [Procss configuration](https://github.com/vindm/procss#configuration)
+ for more info about `.procss.js` config file.
+ 
+You can use `Procss-sprite` config to specify `Spriter` configs by sprite names, defined in CSS commands.
+
+You should use 'default' reserved name to define default sprite config that will be used
+ for images with not defined CSS command sprite name or
+ to be extended with config for images with specific sprite name.
+
+For example, if you have `./.procss.js` config file like this:
+```js
+module.exports = {
+    plugins : [ {
+        plugin : 'procss-sprite',
+        config : {
+            'default' : { name : 'supersprite' },
+            mysprite : { name : 'supersprite' }
+        }
+    } ]
+};
+```
+and files:
+
+`./a.css`
+```css
+.bg1 {
+    background: url(image1.png) /* procss.sprite() */;
+}
+.bg2 {
+    background: url(image2.png) /* procss.sprite(mysprite) */;
+}
+```
+`./b.css`
+```css
+.bg3 {
+    background: url(image3.png) /* procss.sprite(supersprite) */;
+}
+```
+it will be only one sprite in result with config like the default `Spriter` one but with 'supersprite' as `name`.
+  
+Also, you can specify configs depending on spriting image path with `image_paths` wildcards: 
+```js
+module.exports = {
+    plugins : [ {
+        plugin : 'procss-sprite',
+        config : [
+            {
+                image_paths : '**/*',
+                config : {
+                    'default' : { name : 'sprite' },
+                    mysprite : { name : 'sprite' }
+                }
+            },
+            {
+                image_paths : [ '**/image1.png', '**/super/**/*.png' ],
+                config : {
+                    default : { name : 'supersprite' }
+                }
+            }
+        ]
+    } ]
+};
+```
+Each matched config will be extended by the next one, so definition order is significant.
+
+And, finally, you can specify different configs depending on processing file paths: 
+```js
+module.exports = [
+    {
+        file_paths : '**/*.css',
+        plugins : [ {
+            plugin : 'procss-sprite',
+            config : {
+                'default' : { name : 'sprite' },
+                mysprite : { name : 'sprite' }
+            }
+        } ]
+    },
+    {
+        file_paths : '**/super/**/*.css',
+        plugins : [ {
+            plugin : 'procss-sprite',
+            config : [
+                {
+                    image_paths : [ '**/super/**/*.png' ],
+                    config : {
+                        supersprite : { name : 'supersprite' }
+                    }
+                }
+            ]
+        } ]
+    },
+    {
+        file_paths : '**/not-for-spriting/**/*.css',
+        plugins : []
+    }
+];
+```
+
+Checkout [Procss configuration](https://github.com/vindm/procss#configuration)
+ for more info about `.procss.js` config file.
