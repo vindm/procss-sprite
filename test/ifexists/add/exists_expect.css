@@ -1,16 +1,16 @@
 #ifexists-add .bird
 {
     background: transparent;
-    background-image: url(../../_common/img/winged/bird.png) /* procss.sprite(sum:b54b74176b7778d32b8c7b2362b06f29c648b4a1, sprite) */;
-    background-image: url(sprites/sprite.png) /*~~*/;
-    background-position: -2px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(../../_common/img/winged/bird.png) /* procss.sprited(sprite) */;
+    background-image: url(sprites/sprite.png) /*~*/;
+    background-position: -2px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #ifexists-add .bee
 {
-    background: transparent url(../../_common/img/winged/bee.png) no-repeat /* procss.sprite(sum:9d72309639ffba7684db39d270d80539369ac515, sprite) */;
-    background-image: url(sprites/sprite.png) /*~~*/;
-    background-position: -132px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: transparent url(../../_common/img/winged/bee.png) no-repeat /* procss.sprited(sprite) */;
+    background-image: url(sprites/sprite.png) /*~*/;
+    background-position: -132px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }

@@ -1,0 +1,66 @@
+.cars
+{
+    max-width: 50%;
+}
+.car
+{
+    width: 70px;
+    height: 28px;
+    display: inline-block;
+    margin: 10px;
+}
+
+.car.allroad
+{
+    background: url(../../images/cars/allroad.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.cabriolet
+{
+    background: url(../../images/cars/cabriolet.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.coupe
+{
+    background: url(../../images/cars/coupe.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.crossover
+{
+    background: url(../../images/cars/crossover.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.hatchback
+{
+    background: url(../../images/cars/hatchback.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.minibus
+{
+    background: url(../../images/cars/minibus.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.miniwen
+{
+    background: url(../../images/cars/miniwen.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.pickup
+{
+    background: url(../../images/cars/pickup.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.sedan
+{
+    background: url(../../images/cars/sedan.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.universal
+{
+    background: url(../../images/cars/universal.png) no-repeat /* procss.sprite(cars) */;
+}
+
+.car.van
+{
+    background: url(../../images/cars/van.png) no-repeat /* procss.sprite(cars) */;
+}

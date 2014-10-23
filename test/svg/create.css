@@ -1,0 +1,59 @@
+.bodytypes .allroad
+{
+    background-image: url(../_common/img/svg/allroad.svg) /* procss.sprite() */;
+}
+
+.bodytypes .cabriolet
+{
+    background-image: url(../_common/img/svg/cabriolet.svg) /* procss.sprite() */;
+}
+
+.bodytypes .coupe
+{
+    background-image: url(../_common/img/svg/coupe.svg) /* procss.sprite() */;
+}
+
+.bodytypes .crossover
+{
+    background-image: url(../_common/img/svg/crossover.svg) /* procss.sprite() */;
+}
+
+.bodytypes .hatchback
+{
+    background-image: url(../_common/img/svg/hatchback.svg) /* procss.sprite() */;
+}
+
+.bodytypes .minibus
+{
+    background-image: url(../_common/img/svg/minibus.svg) /* procss.sprite() */;
+}
+
+.bodytypes .miniwen
+{
+    background-image: url(../_common/img/svg/miniwen.svg) /* procss.sprite() */;
+}
+
+.bodytypes .pickup
+{
+    background-image: url(../_common/img/svg/pickup.svg) /* procss.sprite() */;
+}
+
+.bodytypes .sedan
+{
+    background-image: url(../_common/img/svg/sedan.svg) /* procss.sprite() */;
+}
+
+.bodytypes .universal
+{
+    background-image: url(../_common/img/svg/universal.svg) /* procss.sprite() */;
+}
+
+.bodytypes .van
+{
+    background-image: url(../_common/img/svg/van.svg) /* procss.sprite() */;
+}
+
+.bodytypes .man
+{
+    background-image: url(../_common/img/svg/man.svg) /* procss.sprite() */;
+}

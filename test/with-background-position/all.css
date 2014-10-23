@@ -1,7 +1,7 @@
 #with-background-position .beaver
 {
-    background: url(../_common/img/winged/bee.png) -113px -130px,
-                url(../_common/img/winged/bird.png) 0 -151px,
+    background: url(../_common/img/winged/bee.png) 113px 130px,
+                url(../_common/img/winged/bird.png) 0 151px,
                 url(../_common/img/beaver.png)
                  /* procss.sprite(, 130) */;
 }
@@ -9,7 +9,7 @@
 #with-background-position .bird
 {
     background-image: url(../_common/img/winged/bee.png), url(../_common/img/winged/bird.png) /* procss.sprite() */;
-    background-position: -40px -10px, 0 0;
+    background-position: 40px 10px, 0 0;
     background-color: transparent;
 }
 

@@ -1,24 +1,24 @@
 #with-config-patterns .beaver
 {
-    background: url(../_common/img/beaver.png) /* procss.sprite(sum:34fc09432b7547b20fd9e7631b9d06ace53d997b) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -2px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: url(../_common/img/beaver.png) /* procss.sprited() */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -2px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-config-patterns .bird
 {
     background: transparent;
-    background-image: url(../_common/img/winged/bird.png) /* procss.sprite(sum:69bc2fdf75001c86a12b930f155d2ebbb4da498d) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -260px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprited() */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -260px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-config-patterns .bee
 {
-    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite(sum:1945c6fd95d868e91edc102bb459828618546179) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -260px -132px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprited() */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -260px -132px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }

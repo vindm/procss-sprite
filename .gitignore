@@ -1,5 +1,6 @@
 node_modules/
 sprites/
 .spriter.json
+example/**/*.pro.css
 .idea/
 .DS_Store

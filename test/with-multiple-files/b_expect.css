@@ -1,8 +1,8 @@
 #witt-multiple-files .bird
 {
     background: transparent;
-    background-image: url(../_common/img/winged/bird.png) /* procss.sprite(sum:65447f1e384cd05cab78f8eb0bbbfbe57a1467ae) */;
-    background-image: url(sprites/multifile_sprite.png) /*~~*/;
-    background-position: -260px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprited() */;
+    background-image: url(sprites/multifile_sprite.png) /*~*/;
+    background-position: -260px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }

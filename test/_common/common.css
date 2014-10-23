@@ -25,8 +25,7 @@ section h2 {
     background-color: #000000;
     display: inline-block;
     vertical-align: middle;
-    border: 2px solid rgb(173, 76, 166);
-    padding: 1px;
+    outline: 2px solid rgb(173, 76, 166);
     margin: 10px;
 }
 
@@ -44,4 +43,26 @@ section h2 {
 .bee {
     width: 64px;
     height: 64px;
+}
+
+.bodytypes
+{
+    width: 640px;
+}
+
+.bodytypes > div
+{
+    width: 20%;
+    padding-top: 8%;
+    display: inline-block;
+    background-repeat: no-repeat;
+    outline: 1px solid rgb(56, 27, 49);
+    margin: 1%;
+}
+
+.bodytypes .man
+{
+    float: right;
+    width: 10%;
+    padding-top: 32.6%;
 }

@@ -1,7 +1,7 @@
 #witt-multiple-files .bee
 {
-    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite(sum:1a1b196f31696379dfef58a52f1f938024bb0ad4) */;
-    background-image: url(sprites/multifile_sprite.png) /*~~*/;
-    background-position: -260px -132px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprited() */;
+    background-image: url(sprites/multifile_sprite.png) /*~*/;
+    background-position: -260px -132px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
