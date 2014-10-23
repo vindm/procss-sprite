@@ -1,0 +1,56 @@
+.seats
+{
+    max-width: 50%;
+}
+
+.seats > div
+{
+    display: inline-block;
+}
+
+.seats .icon
+{
+    width: 57px;
+    height: 15px;
+    margin: 32px 0 1px 0;
+}
+
+.seats_count_1 .icon
+{
+    background: url(../../images/seats/seats_count_3.png) /* procss.sprite() */;
+}
+
+.seats_count_2 .icon
+{
+    background: url(../../images/seats/seats_count_4.png) /* procss.sprite() */;
+}
+
+.seats_count_3 .icon
+{
+    background: url(../../images/seats/seats_count_5.png) /* procss.sprite() */;
+}
+
+.seats_count_4 .icon
+{
+    background: url(../../images/seats/seats_count_6.png) /* procss.sprite() */;
+}
+
+.seats_count_5 .icon
+{
+    background: url(../../images/seats/seats_count_7.png) /* procss.sprite() */;
+}
+
+.seats_count_6 .icon
+{
+    background: url(../../images/seats/seats_count_8.png) /* procss.sprite() */;
+}
+
+.seats_count_7 .icon
+{
+    background: url(../../images/seats/seats_count_9.png) /* procss.sprite() */;
+}
+
+.seats_count_8 .icon
+{
+    background: url(../../images/seats/seats_count_10.png) /* procss.sprite() */;
+}

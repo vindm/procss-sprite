@@ -133,6 +133,7 @@ describe('Procss-sprite', function() {
     describe('with multiple backgrounds', function() {
         var basePath = PATH.resolve(__dirname, 'with-multiple-backgrounds');
         var expectFileContent = FS.readFileSync(PATH.resolve(basePath, 'expect.css'), 'utf8');
+        var outputFilePath = PATH.resolve(basePath, 'all.pro.css');
 
         beforeEach(function(done) {
             require('child_process').exec('rm -rf ' + PATH.resolve(basePath, 'sprites'), function() {
@@ -140,15 +141,13 @@ describe('Procss-sprite', function() {
             });
         });
 
-        it('should sprite multiple background images in css', function() {
-            var outputFilePath = PATH.resolve(basePath, 'all.pro.css');
-
-            after(function(done) {
-                require('child_process').exec('rm -rf ' + outputFilePath, function() {
-                    done();
-                });
+        afterEach(function(done) {
+            require('child_process').exec('rm -rf ' + outputFilePath, function() {
+                done();
             });
+        });
 
+        it('should sprite multiple background images in css', function() {
             return PROCSS
                 .api({
                     input : PATH.resolve(basePath, 'all.css'),
@@ -165,6 +164,7 @@ describe('Procss-sprite', function() {
     describe('with padding', function() {
         var basePath = PATH.resolve(__dirname, 'with-padding');
         var expectFileContent = FS.readFileSync(PATH.resolve(basePath, 'expect.css'), 'utf8');
+        var outputFilePath = PATH.resolve(basePath, 'all.pro.css');
 
         beforeEach(function(done) {
             require('child_process').exec('rm -rf ' + PATH.resolve(basePath, 'sprites'), function() {
@@ -172,14 +172,13 @@ describe('Procss-sprite', function() {
             });
         });
 
-        it('should set image padding from parsed padding argument', function() {
-            var outputFilePath = PATH.resolve(basePath, 'all.pro.css');
-
-            after(function(done) {
-                require('child_process').exec('rm -rf ' + outputFilePath, function() {
-                    done();
-                });
+        afterEach(function(done) {
+            require('child_process').exec('rm -rf ' + outputFilePath, function() {
+                done();
             });
+        });
+
+        it('should set image padding from parsed padding argument', function() {
 
             return PROCSS
                 .api({
@@ -205,13 +204,13 @@ describe('Procss-sprite', function() {
             });
         });
 
-        it('should use parsed background-position to calc final position', function() {
-            after(function(done) {
-                require('child_process').exec('rm ' + outputFilePath, function() {
-                    done();
-                });
+        afterEach(function(done) {
+            require('child_process').exec('rm ' + outputFilePath, function() {
+                done();
             });
+        });
 
+        it('should use parsed background-position to calc final position', function() {
             return PROCSS
                 .api({
                     input : PATH.resolve(basePath, 'all.css'),
@@ -282,6 +281,7 @@ describe('Procss-sprite', function() {
     describe('with configs by patterns', function() {
         var basePath = PATH.resolve(__dirname, 'with-config-patterns');
         var expectFileContent = FS.readFileSync(PATH.resolve(basePath, 'expect.css'), 'utf8');
+        var outputFilePath = PATH.resolve(basePath, 'out.css');
 
         beforeEach(function(done) {
             require('child_process').exec('rm -rf ' + PATH.resolve(basePath, 'sprites'), function() {
@@ -289,14 +289,13 @@ describe('Procss-sprite', function() {
             });
         });
 
-        it('should get and extend sprite configs by matching configs patterns with processing image path', function() {
-            var outputFilePath = PATH.resolve(basePath, 'out.css');
-
-            after(function(done) {
-                require('child_process').exec('rm -rf ' + outputFilePath, function() {
-                    done();
-                });
+        afterEach(function(done) {
+            require('child_process').exec('rm -rf ' + outputFilePath, function() {
+                done();
             });
+        });
+
+        it('should get and extend sprite configs by matching configs patterns with processing image path', function() {
 
             return PROCSS
                 .api({ input : PATH.resolve(basePath, 'all.css') })

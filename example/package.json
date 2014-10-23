@@ -1,0 +1,8 @@
+{
+	"name" : "procss-sprite-example",
+	"version" : "0.0.1",
+	"devDependencies" : {
+		"procss" : "git://github.com/vindm/procss#0.1.0",
+		"procss-sprite" : "git://github.com/vindm/procss-sprite#7fa26df8aa9e903713f0998f2cb2175e7e9f76fc"
+	}
+}

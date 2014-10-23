@@ -1,24 +1,24 @@
 #with-padding .beaver
 {
-    background: url(../_common/img/beaver.png) /* procss.sprite(sum:61ccd6d413a04b31b1832b7451b2eaaba2e978d9, 20) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -20px -20px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: url(../_common/img/beaver.png) /* procss.sprited(,20) */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -20px -20px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-padding .bird
 {
     background: transparent;
-    background-image: url(../_common/img/winged/bird.png) /* procss.sprite(sum:a5fee304b0539962f2dc34658b57c6dca736e991, 84px 20px) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -296px -84px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(../_common/img/winged/bird.png) /* procss.sprited(,84px 20px) */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -296px -84px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-padding .bee
 {
-    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprite(sum:ea1c85b818397c613ec55273eb4be54be8e1d1ac, 116 20) */;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -444px -116px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: transparent url(../_common/img/winged/bee.png) no-repeat /* procss.sprited(,116 20) */;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -444px -116px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }

@@ -1,25 +1,25 @@
 #with-multiple-backgrounds .beaver
 {
-    background: url(../_common/img/winged/bee.png), url(../_common/img/beaver.png) /* procss.sprite(sum:60df1e1a1c72c3ac5fb6e780118a8dcee7dd97d0) */;
-    background-image: url(sprites/common.png), url(sprites/common.png) /*~~*/;
-    background-position: -260px -132px, -2px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background: url(../_common/img/winged/bee.png), url(../_common/img/beaver.png) /* procss.sprited() */;
+    background-image: url(sprites/common.png), url(sprites/common.png) /*~*/;
+    background-position: -260px -132px, -2px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-multiple-backgrounds .bird
 {
-    background-image: url(../_common/img/winged/bee.png), url(../_common/img/winged/bird.png) /* procss.sprite(sum:8868d04bee6c4a4febddfaa8c68b246992550a4c) */;
+    background-image: url(../_common/img/winged/bee.png), url(../_common/img/winged/bird.png) /* procss.sprited() */;
     background-color: transparent;
-    background-image: url(sprites/common.png), url(sprites/common.png) /*~~*/;
-    background-position: -260px -132px, -260px -2px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(sprites/common.png), url(sprites/common.png) /*~*/;
+    background-position: -260px -132px, -260px -2px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }
 
 #with-multiple-backgrounds .bee
 {
-    background-image: url(../_common/img/winged/bee.png) /* procss.sprite(sum:1945c6fd95d868e91edc102bb459828618546179) */;
+    background-image: url(../_common/img/winged/bee.png) /* procss.sprited() */;
     background-color: transparent;
-    background-image: url(sprites/common.png) /*~~*/;
-    background-position: -260px -132px /*~~*/;
-    background-repeat: no-repeat /*~~*/;
+    background-image: url(sprites/common.png) /*~*/;
+    background-position: -260px -132px /*~*/;
+    background-repeat: no-repeat /*~*/;
 }

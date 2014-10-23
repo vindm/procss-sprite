@@ -5,7 +5,7 @@ var VOW = require('vow'),
     GLOBULE = require('globule'),
     SPRITER = require('spriter');
 
-var SPEC_COMMENT = '/*~~*/';
+var SPEC_COMMENT = '/*~*/';
 
 require('colors');
 
@@ -32,34 +32,26 @@ ProcssSprite.api = (function() {
             instance.config = Array.isArray(pluginConfig) ?
                 pluginConfig :
                 [ {
-                    patterns : '**',
+                    image_paths : '**/*',
                     config : pluginConfig
                 } ];
         },
 
         process : function(procss) {
             var command = procss.command,
-                spriting;
+                isProcessed = command.name === 'sprited';
 
-            if (command.name !== 'sprite') {
+            if ( ! isProcessed && command.name !== 'sprite') {
                 return;
             }
 
-            spriting = {
+            instance._spriting.push({
                 file : procss.file,
-                decl : procss.decl
-            };
-
-            if (command.params[0] && command.params[0].indexOf('sum:') === 0) {
-                spriting.sprited = command.params[0].substr(4);
-                command.params = command.params.slice(1);
-            }
-
-            spriting.command = command;
-            spriting.name = command.params[0];
-            spriting.padding = command.params[1] && command.params[1].split(' ');
-
-            instance._spriting.push(spriting);
+                decl : procss.decl,
+                command : command,
+                name : command.params[0],
+                padding : command.params[1] && command.params[1].split(' ')
+            });
         },
 
         after : function(procss) {
@@ -75,20 +67,20 @@ ProcssSprite.api = (function() {
                     instance._spriting.forEach(function(spr) {
                         var rule = spr.decl.parent,
                             images = spr.images,
+                            params = spr.command.params,
                             isAtLeastOneSprited,
-                            hashSum,
-                            cmt,
+                            decls,
                             bg;
 
                         if ( ! images || images.length === 0) {
                             return;
                         }
 
-                        isAtLeastOneSprited = false;
                         bg = images.reduce(function(bg, image) {
                             var spritedData = instance.getSprited(image);
 
                             if (spritedData) {
+                                image.sprited = spritedData;
                                 bg.urls.push('url(' + spritedData.url + ')');
                                 bg.positions.push(spritedData.position);
                                 bg.repeats.push(spritedData.repeat);
@@ -110,45 +102,46 @@ ProcssSprite.api = (function() {
                             return;
                         }
 
-                        hashSum = CRYPTO.createHash('sha1');
-                        hashSum.update(JSON.stringify(bg));
-                        hashSum = hashSum.digest('hex');
-
-                        cmt = [ 'sum:' + hashSum ];
-                        spr.command.params[0] && cmt.push(spr.command.params[0]);
-                        spr.command.params[1] && cmt.push(spr.command.params[1]);
-
-                        spr.decl.value += ' ' + procss.pcss.comment({
-                            text : 'procss.sprite(' + cmt.join(', ') + ')'
-                        });
-
-                        if (hashSum === spr.sprited ) {
-                            return;
-                        }
+                        decls = {
+                            'background-image' : {
+                                value : bg.urls.join(', ') + ' ' + SPEC_COMMENT
+                            },
+                            'background-position' : {
+                                value : ProcssSprite
+                                    ._uniqueSequence(bg.positions.map(function(pos) {
+                                        return [ pos.x, ' ', pos.y ].join('');
+                                    })).join(', ') + ' ' + SPEC_COMMENT
+                            },
+                            'background-repeat' : {
+                                value : ProcssSprite._uniqueSequence(bg.repeats).join(', ') + ' ' + SPEC_COMMENT
+                            }
+                        };
 
                         rule.eachDecl(function(decl) {
-                            if ((decl._value && decl._value.raw || decl.value).indexOf(SPEC_COMMENT) !== -1) {
-                                decl.removeSelf();
+                            var hash;
+
+                            if (
+                                (hash = decls[decl.prop]) &&
+                                (decl._value && decl._value.raw || decl.value).indexOf(SPEC_COMMENT) !== -1
+                            ) {
+                                hash.last = decl;
                             }
                         });
 
-                        rule.append({
-                            prop : 'background-image',
-                            value : bg.urls.join(', ') + ' ' + SPEC_COMMENT
+                        Object.keys(decls).forEach(function(prop) {
+                            decls[prop].last ?
+                                (decls[prop].last.value = decls[prop].value) :
+                                rule.append({ prop : prop, value : decls[prop].value });
                         });
-                        rule.append({
-                            prop : 'background-position',
-                            value : ProcssSprite
-                                ._uniqueSequence(bg.positions.map(function(pos) {
-                                    return [ pos.x, ' ', pos.y ].join('');
-                                }))
-                                .join(', ') + ' ' + SPEC_COMMENT
-                        });
-                        rule.append({
-                            prop : 'background-repeat',
-                            value : ProcssSprite
-                                ._uniqueSequence(bg.repeats)
-                                .join(', ') + ' ' + SPEC_COMMENT
+
+                        spr.decl.value += ' ' + procss.pcss.comment({
+                            text : 'procss.sprited(' + (
+                                params[1] && params[0] ? [ params[0], params[1] ] :
+                                    params[1] ? [ '', params[1] ] :
+                                        params[0] ? [ params[0] ] :
+                                        []
+                                ).join(',') +
+                            ')'
                         });
                     });
                 });
@@ -261,7 +254,7 @@ ProcssSprite.prototype._prepareSprites = function() {
         defaultPath = PATH.resolve(basePath, 'sprites/');
 
         spr.images = _this
-            ._parseImages(spr.decl)
+            ._parseImages(spr)
             .reduce(function(images, image) {
                 image.origUrl = image.url;
                 image.url = PATH.relative('.', resolve(image.url));
@@ -324,7 +317,7 @@ ProcssSprite.prototype._getSpriteConfig = function(file, image) {
         imagePath = image.url,
         spriteName = image.spriteName,
         config = [].concat(this.config).reduce(function(config, cnfg) {
-            if (GLOBULE.isMatch(cnfg.patterns, imagePath)) {
+            if (GLOBULE.isMatch(cnfg.image_paths, imagePath)) {
                 EXTEND(true, config, cnfg.config);
             }
 
@@ -334,7 +327,7 @@ ProcssSprite.prototype._getSpriteConfig = function(file, image) {
 
     defaultConfig = config.hasOwnProperty('default') ?
         config['default'] :
-        {};
+    {};
 
     if (spriteName) {
         res = config[spriteName];
@@ -355,23 +348,26 @@ ProcssSprite.prototype._getSpriteConfig = function(file, image) {
 
 /**
  * @private
- * @param {Object} declaration
+ * @param {Object} spriting
  * @returns {{url: String, repeat: String, position: String[]}[]} Parsed images
  */
-ProcssSprite.prototype._parseImages = function(declaration) {
+ProcssSprite.prototype._parseImages = function(spriting) {
     var parser = this.procss.parser,
+        declaration = spriting.decl,
         parsedImages = [];
 
     if (declaration.prop === 'background') {
-        var bgs = declaration.value.split(',');
+        parsedImages = declaration.value
+            .split(',')
+            .reduce(function(parsedImages, bg) {
+                parsedImages.push({
+                    url : parser.parseBgUrl(bg),
+                    repeat : parser.parseBgRepeat(bg),
+                    position : parser.parseBgPosition(bg)
+                });
 
-        parsedImages = bgs.map(function(bg) {
-            return {
-                url : parser.parseBgUrl(bg),
-                repeat : parser.parseBgRepeat(bg),
-                position : parser.parseBgPosition(bg)
-            };
-        });
+                return parsedImages;
+            }, []);
     } else if (declaration.prop === 'background-image') {
         var urls = declaration.value.split(','),
             repeats,
@@ -380,14 +376,11 @@ ProcssSprite.prototype._parseImages = function(declaration) {
             positionsCount;
 
         declaration.parent.eachDecl(function(decl) {
-            if ((decl._value && decl._value.raw || decl.value).indexOf('/*~~*/') === -1) {
-
-                if (decl.prop === 'background-repeat') {
-                    repeats = decl.value.split(',');
-                }
-                if (decl.prop === 'background-position') {
-                    positions = decl.value.split(',');
-                }
+            if (decl.prop === 'background-repeat') {
+                repeats = decl.value.split(',');
+            }
+            if (decl.prop === 'background-position') {
+                positions = decl.value.split(',');
             }
         });
 
@@ -422,6 +415,7 @@ ProcssSprite._isImageSpritable = function(img) {
         repeat = img.repeat || 'no-repeat';
 
     isImageSpritable = path &&
+        path.indexOf('data') !== 0 &&
         repeat === 'no-repeat' &&
         position &&
         String(position.x).indexOf('px') !== -1 &&
