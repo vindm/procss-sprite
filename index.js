@@ -50,7 +50,10 @@ ProcssSprite.api = (function() {
                 decl : procss.decl,
                 command : command,
                 name : command.params[0],
-                padding : command.params[1] && command.params[1].split(' ')
+                padding : command.params[1] && command.params[1].split(' '),
+                relativeSize : [ 'width', 'height', 'both' ].indexOf(command.params[3]) !== -1 ?
+                    command.params[3] :
+                    null
             });
         },
 
@@ -60,92 +63,102 @@ ProcssSprite.api = (function() {
                 .then(function(images) {
                     var spritedImages = images;
 
-                    if ( ! spritedImages || spritedImages.length === 0) {
-                        return;
-                    }
+                    spritedImages && spritedImages.length !== 0 &&
+                        instance._spriting.forEach(function(spr) {
+                            var rule = spr.decl.parent,
+                                images = spr.images,
+                                params = spr.command.params,
+                                isAtLeastOneSprited,
+                                decls,
+                                bg;
 
-                    instance._spriting.forEach(function(spr) {
-                        var rule = spr.decl.parent,
-                            images = spr.images,
-                            params = spr.command.params,
-                            isAtLeastOneSprited,
-                            decls,
-                            bg;
-
-                        if ( ! images || images.length === 0) {
-                            return;
-                        }
-
-                        bg = images.reduce(function(bg, image) {
-                            var spritedData = instance.getSprited(image);
-
-                            if (spritedData) {
-                                image.sprited = spritedData;
-                                bg.urls.push('url(' + spritedData.url + ')');
-                                bg.positions.push(spritedData.position);
-                                bg.repeats.push(spritedData.repeat);
-                                isAtLeastOneSprited || (isAtLeastOneSprited = true);
-                            } else {
-                                bg.urls.push('url(' + image.origUrl + ')');
-                                bg.positions.push(image.position);
-                                bg.repeats.push(image.repeat);
+                            if ( ! images || images.length === 0) {
+                                return;
                             }
 
-                            return bg;
-                        }, {
-                            urls : [],
-                            positions : [],
-                            repeats : []
-                        });
+                            bg = images.reduce(function(bg, image) {
+                                var spritedData = instance.getSprited(image);
 
-                        if ( ! isAtLeastOneSprited || bg.urls.length === 0) {
-                            return;
-                        }
+                                if (spritedData) {
+                                    image.sprited = spritedData;
+                                    bg.urls.push('url(' + spritedData.url + ')');
+                                    bg.positions.push(spritedData.position);
+                                    bg.repeats.push(spritedData.repeat);
+                                    bg.size.push(spritedData.size || null);
+                                    isAtLeastOneSprited || (isAtLeastOneSprited = true);
+                                } else {
+                                    bg.urls.push('url(' + image.origUrl + ')');
+                                    bg.positions.push(image.position);
+                                    bg.repeats.push(image.repeat);
+                                    bg.size.push(image.size || null);
+                                }
 
-                        decls = {
-                            'background-image' : {
-                                value : bg.urls.join(', ') + ' ' + SPEC_COMMENT
-                            },
-                            'background-position' : {
-                                value : ProcssSprite
-                                    ._uniqueSequence(bg.positions.map(function(pos) {
-                                        return [ pos.x, ' ', pos.y ].join('');
+                                return bg;
+                            }, {
+                                urls : [],
+                                positions : [],
+                                repeats : [],
+                                size : []
+                            });
+
+                            if ( ! isAtLeastOneSprited || bg.urls.length === 0) {
+                                return;
+                            }
+
+                            decls = {
+                                'background-image' : {
+                                    value : bg.urls.join(', ') + ' ' + SPEC_COMMENT
+                                },
+                                'background-position' : {
+                                    value : ProcssSprite
+                                        ._uniqueSequence(bg.positions.map(function(pos) {
+                                            return [ pos.x, pos.y ].join(' ');
+                                        })).join(', ') + ' ' + SPEC_COMMENT
+                                },
+                                'background-repeat' : {
+                                    value : ProcssSprite._uniqueSequence(bg.repeats).join(', ') + ' ' + SPEC_COMMENT
+                                }
+                            };
+
+                            if (bg.size.some(function(s) { return s; })) {
+                                decls['background-size'] = {
+                                    value : ProcssSprite._uniqueSequence(bg.size.map(function(size) {
+                                        return size ? size.join(' ') : 'auto auto';
                                     })).join(', ') + ' ' + SPEC_COMMENT
-                            },
-                            'background-repeat' : {
-                                value : ProcssSprite._uniqueSequence(bg.repeats).join(', ') + ' ' + SPEC_COMMENT
+                                };
                             }
-                        };
 
-                        rule.eachDecl(function(decl) {
-                            var hash;
+                            rule.eachDecl(function(decl) {
+                                var hash = decls[decl.prop];
 
-                            if (
-                                (hash = decls[decl.prop]) &&
-                                (decl._value && decl._value.raw || decl.value).indexOf(SPEC_COMMENT) !== -1
-                            ) {
-                                hash.last = decl;
-                            }
+                                if (hash && (decl._value && decl._value.raw || decl.value).indexOf(SPEC_COMMENT) !== -1) {
+                                    hash.last = decl;
+                                }
+                            });
+
+                            Object.keys(decls).forEach(function(prop) {
+                                var hash = decls[prop];
+
+                                if (hash.last) {
+                                    hash.last.value = hash.value;
+                                } else {
+                                    rule.append({ prop : prop, value : hash.value });
+                                }
+                            });
+
+                            spr.decl.value += ' ' + procss.pcss.comment({
+                                text : 'procss.sprited(' + (
+                                    params[1] && params[0] ? [ params[0], params[1] ] :
+                                        params[1] ? [ '', params[1] ] :
+                                            params[0] ? [ params[0] ] :
+                                            []
+                                    ).join(',') +
+                                ')'
+                            });
                         });
-
-                        Object.keys(decls).forEach(function(prop) {
-                            decls[prop].last ?
-                                (decls[prop].last.value = decls[prop].value) :
-                                rule.append({ prop : prop, value : decls[prop].value });
-                        });
-
-                        spr.decl.value += ' ' + procss.pcss.comment({
-                            text : 'procss.sprited(' + (
-                                params[1] && params[0] ? [ params[0], params[1] ] :
-                                    params[1] ? [ '', params[1] ] :
-                                        params[0] ? [ params[0] ] :
-                                        []
-                                ).join(',') +
-                            ')'
-                        });
-                    });
                 });
         }
+
     };
 })();
 
@@ -159,8 +172,8 @@ ProcssSprite.prototype.makeSprites = function() {
     return VOW
         .all(Object
             .keys(spritesData)
-            .map(function(spritePath) {
-                var spriteData = spritesData[spritePath],
+            .map(function(spriteId) {
+                var spriteData = spritesData[spriteId],
                     config = spriteData.config,
                     defer = VOW.defer();
 
@@ -168,9 +181,13 @@ ProcssSprite.prototype.makeSprites = function() {
 
                 SPRITER
                     .api(config)
+                    // to avoid `Promise.valueOf` error
                     .then(function() {
                         defer.resolve.apply(defer, arguments);
-                    }, defer.reject);
+                    })
+                    .fail(function(e) {
+                        defer.reject(e);
+                    });
 
                 return defer.promise();
             }))
@@ -195,34 +212,47 @@ ProcssSprite.prototype.makeSprites = function() {
  * @returns {?Object} Sprited data by image id
  */
 ProcssSprite.prototype.getSprited = function(image) {
-    var spritedImages = this.images || [],
-        imageId = image.id,
-        properties;
+    if ( ! image.sprite) {
+        return null;
+    }
 
-    imageId && spritedImages.some(function(spritedImage) {
-        var pos;
+    var relative = image.relativeSize,
+        spriteHeight,
+        spriteWidth,
+        pos,
+        unit,
+        size;
 
-        if (spritedImage.id === imageId) {
-            pos = {
-                x : spritedImage.positionX + spritedImage.padding[3] + parseInt(image.position.x, 10),
-                y : spritedImage.positionY + spritedImage.padding[0] + parseInt(image.position.y, 10)
-            };
-            pos.x && (pos.x = 0 - pos.x + 'px');
-            pos.y && (pos.y = 0 - pos.y + 'px');
+    if (relative) {
+        spriteWidth = image.sprite.swidth;
+        spriteHeight = image.sprite.sheight;
 
-            properties = {
-                url : PATH.relative(spritedImage.basePath, spritedImage.spriteUrl),
-                position : pos,
-                repeat : 'no-repeat'
-            };
+        pos = {
+            x : image.positionX && (100 * image.positionX / (spriteWidth - image.swidth)).toFixed(3),
+            y : image.positionY && (100 * image.positionY / (spriteHeight - image.sheight)).toFixed(3)
+        };
+        size = [
+            relative === 'height' ? 'auto' : parseFloat((100 * spriteWidth / image.swidth).toFixed(3)) + '%',
+            relative === 'width' ? 'auto' : parseFloat((100 * spriteHeight / image.sheight).toFixed(3)) + '%'
+        ];
+        unit = '%';
+    } else {
+        pos = {
+            x : 0 - image.sx + parseInt(image.position.x, 10),
+            y : 0 - image.sy + parseInt(image.position.y, 10)
+        };
+        unit = 'px';
+    }
 
-            return true;
-        }
+    pos.x && (pos.x = parseFloat(pos.x) + unit);
+    pos.y && (pos.y = parseFloat(pos.y) + unit);
 
-        return false;
-    });
-
-    return properties;
+    return {
+        url : PATH.relative(image.basePath, image.spriteUrl),
+        position : pos,
+        repeat : 'no-repeat',
+        size : size
+    };
 };
 
 /**
@@ -231,41 +261,44 @@ ProcssSprite.prototype.getSprited = function(image) {
  * @private
  */
 ProcssSprite.prototype._prepareSprites = function() {
-    var _this = this;
+    var _this = this,
+        defBasePath = PATH.relative('.', process.cwd()),
+        defResolve = PATH.resolve.bind(PATH),
+        defDefaultPath = PATH.resolve(defBasePath, 'sprites/');
 
     return _this._spriting.reduce(function(spritesData, spr) {
         var file = spr.file,
             output = file.config.output,
-            defaultName = ! file.config.input || file.config.input === '-' ?
-                'sprite' :
-                PATH.basename(file.config.input, '.css'),
+            defaultName = file.config.input && file.config.input !== '-' ?
+                PATH.basename(file.config.input, '.css') :
+                'sprite',
             defaultPath,
             basePath,
             resolve;
 
         if (output === '-') {
-            basePath = PATH.relative('.', process.cwd());
-            resolve = PATH.resolve.bind(PATH);
+            basePath = defBasePath;
+            resolve = defResolve;
+            defaultPath = defDefaultPath;
         } else {
             basePath = PATH.relative('.', PATH.dirname(output));
             resolve = PATH.resolve.bind(PATH, PATH.dirname(output));
+            defaultPath = PATH.resolve(basePath, 'sprites/');
         }
-
-        defaultPath = PATH.resolve(basePath, 'sprites/');
 
         spr.images = _this
             ._parseImages(spr)
             .reduce(function(images, image) {
+                var spriteConfig,
+                    spriteData,
+                    spriteId,
+                    hash;
+
                 image.origUrl = image.url;
                 image.url = PATH.relative('.', resolve(image.url));
                 image.basePath = basePath;
 
                 if (ProcssSprite._isImageSpritable(image)) {
-                    var spriteConfig,
-                        spriteData,
-                        spritePath,
-                        hash;
-
                     image.spriteName = spr.name;
                     image.padding = spr.padding;
 
@@ -276,21 +309,34 @@ ProcssSprite.prototype._prepareSprites = function() {
                     }
 
                     spriteConfig = _this._getSpriteConfig(file, image);
+
                     spriteConfig.path = PATH.relative('.',
                         spriteConfig.path ?
                             PATH.resolve(spriteConfig.path) :
                             defaultPath);
+
                     spriteConfig.name = spriteConfig.name ?
                         spriteConfig.name.replace('?', defaultName) :
                         'common';
 
-                    spritePath = PATH.resolve(spriteConfig.path, PATH.basename(spriteConfig.name, '.css'));
-                    spriteData = spritesData[spritePath];
+                    image.relativeSize = spr.relativeSize || spriteConfig.relativeSize;
+                    if (PATH.extname(image.url) === '.svg') {
+                        if (typeof image.relativeSize === 'undefined') {
+                            image.relativeSize = 'both';
+                        }
+                        spriteConfig.ext = 'svg';
+                    }
+
+                    spriteId = CRYPTO.createHash('sha1');
+                    spriteId.update(JSON.stringify(spriteConfig));
+                    spriteId = spriteId.digest('hex');
+
+                    spriteData = spritesData[spriteId];
 
                     if (spriteData) {
                         spriteData.images.push(image);
                     } else {
-                        spritesData[spritePath] = {
+                        spritesData[spriteId] = {
                             images : [ image ],
                             config : spriteConfig
                         };
@@ -376,11 +422,12 @@ ProcssSprite.prototype._parseImages = function(spriting) {
             positionsCount;
 
         declaration.parent.eachDecl(function(decl) {
-            if (decl.prop === 'background-repeat') {
-                repeats = decl.value.split(',');
-            }
-            if (decl.prop === 'background-position') {
-                positions = decl.value.split(',');
+            if ((decl._value && decl._value.raw || decl.value).indexOf(SPEC_COMMENT) === -1) {
+                if (decl.prop === 'background-repeat') {
+                    repeats = decl.value.split(',');
+                } else if (decl.prop === 'background-position') {
+                    positions = decl.value.split(',');
+                }
             }
         });
 

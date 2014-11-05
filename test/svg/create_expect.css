@@ -1,0 +1,107 @@
+.bodytypes .allroad
+{
+    background-image: url(../_common/img/svg/allroad.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 34.50% 0.49% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .cabriolet
+{
+    background-image: url(../_common/img/svg/cabriolet.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 1.17% 99.51% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .coupe
+{
+    background-image: url(../_common/img/svg/coupe.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 34.50% 33.50% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .crossover
+{
+    background-image: url(../_common/img/svg/crossover.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 98.83% 66.50% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .hatchback
+{
+    background-image: url(../_common/img/svg/hatchback.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 98.83% 83.01% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .minibus
+{
+    background-image: url(../_common/img/svg/minibus.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 98.83% 50.00% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .miniwen
+{
+    background-image: url(../_common/img/svg/miniwen.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 1.17% 50.00% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .pickup
+{
+    background-image: url(../_common/img/svg/pickup.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 98.83% 99.51% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .sedan
+{
+    background-image: url(../_common/img/svg/sedan.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 1.17% 66.50% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .universal
+{
+    background-image: url(../_common/img/svg/universal.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 34.50% 16.99% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .van
+{
+    background-image: url(../_common/img/svg/van.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 1.17% 83.01% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 203.64%,724.24% /*~*/;
+}
+
+.bodytypes .man
+{
+    background-image: url(../_common/img/svg/man.svg) /* procss.sprited() */;
+    background-image: url(sprites/common.svg) /*~*/;
+    background-position: 0.71% 0.67% /*~*/;
+    background-repeat: no-repeat /*~*/;
+    background-size: 610.91%,265.56% /*~*/;
+}
