@@ -3,7 +3,7 @@ var VOW = require('vow'),
     EXTEND = require('extend'),
     CRYPTO = require('crypto'),
     GLOBULE = require('globule'),
-    SPRITER = require('spriter');
+    SPRITER = require('bonder');
 
 var SPEC_COMMENT = '/*~*/';
 
