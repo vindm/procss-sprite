@@ -1,6 +1,6 @@
 {
     "name" : "procss-sprite",
-    "version" : "0.1.0",
+    "version" : "0.1.2",
     "license" : "MIT",
     "repository" : {
         "type" : "git",
@@ -16,14 +16,14 @@
         "url" : "http://github.com/vindm"
     },
     "dependencies" : {
-        "spriter" : "git://github.com/vindm/spriter.git#dev",
+        "bonder" : "0.2.1",
         "globule" : "^0.2.0",
         "extend" : "^2.0.0",
         "colors" : "^1.0.2",
         "vow" : "^0.4.5"
     },
     "devDependencies" : {
-        "procss" : "git://github.com/vindm/procss.git#dev",
+        "procss" : "0.1.1",
         "mocha" : "1.21.x",
         "chai" : "1.9.x",
         "jshint" : "2.5.x",
